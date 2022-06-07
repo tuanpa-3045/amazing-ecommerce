@@ -1,0 +1,23 @@
+@import "../sass/style.scss";
+
+.container-fluid {
+  margin: 0 auto;
+}
+.wrapper {
+  @include pd($x: 1rem, $y: 1rem);
+  @include flex();
+  margin-top: 76px;
+
+  .sidebar {
+    @include pd($x: 1rem, $y: 1rem);
+    overflow-y: scroll;
+    height: 100vh;
+    border-right: 1px solid #e5e5e5;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

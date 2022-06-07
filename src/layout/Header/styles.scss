@@ -1,0 +1,37 @@
+@import "../../sass/style.scss";
+
+header {
+  @include flex($align: center, $gap: 2rem);
+  @include pd($x: 1rem);
+  position: fixed;
+  z-index: $z-sticky;
+  background-color: $dark-gray;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  .logo {
+    width: 50px;
+  }
+
+  .nameLogo {
+    @include font($fs: 3rem, $fw: $fw-bold, $color: $white);
+  }
+  input {
+    @include pd($x: 1rem, $y: 0.5rem);
+    width: 30rem;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+  .btn {
+    @include pd($x: 0.5rem, $y: 0.6rem);
+    background-color: $primary-color;
+    width: 8rem;
+    border: none;
+    cursor: pointer;
+    &:active {
+      background-color: $orange-color;
+    }
+  }
+}

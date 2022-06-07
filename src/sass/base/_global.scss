@@ -1,0 +1,76 @@
+* {
+  box-sizing: inherit;
+  -webkit-box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  line-height: 2rem;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 1.4rem;
+  font-family: $ff-roboto;
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  white-space: nowrap;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: $black;
+
+  &:hover {
+    color: $red;
+  }
+}
+
+.rating {
+  i {
+    width: 12px;
+    height: 12px;
+    margin-right: 3px;
+    color: $primary-color;
+  }
+}
+
+input[type="checkbox"] ~ label {
+  span {
+    color: $gray;
+  }
+}
+
+[style*="--aspect-ratio"] > :first-child {
+  width: 100%;
+}
+
+[style*="--aspect-ratio"] > img {
+  height: auto;
+}
+
+@supports (--custom: property) {
+  [style*="--aspect-ratio"] {
+    position: relative;
+  }
+
+  [style*="--aspect-ratio"]::before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+  }
+
+  [style*="--aspect-ratio"] > :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+}

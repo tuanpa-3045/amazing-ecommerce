@@ -1,0 +1,7 @@
+.categories li {
+  list-style-type: "> " !important;
+  &:hover {
+    color: #9c0001;
+    cursor: pointer;
+  }
+}

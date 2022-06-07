@@ -1,0 +1,65 @@
+@mixin flex($direction: row, $wrap: nowrap, $gap: 0, $align: "", $justify: "") {
+  display: flex;
+  gap: $gap;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+
+  @if $align != "" {
+    align-items: $align;
+  }
+
+  @if $justify != "" {
+    justify-content: $justify;
+  }
+}
+
+@mixin font($fs: $fs-base, $color: "", $fw: "", $textTrans: none) {
+  font-size: $fs;
+  text-transform: $textTrans;
+
+  @if $color != "" {
+    color: $color;
+  }
+  @if $fw != "" {
+    font-weight: $fw;
+  }
+}
+
+$breakpoints: (
+  smallphone-and-down: "(max-width: 399px)",
+  phone-and-down: "(max-width: 575px)",
+  tablet-and-down: "(max-width: 767px)",
+  desktop-and-down: "(max-width: 991px)",
+  largedesktop-and-down: "(max-width: 1199px)",
+  extralarge-and-down: "(max-width: 1439px)",
+  smallphone-and-up: "(min-width: 400px)",
+  phone-and-up: "(min-width: 576px)",
+  tablet-and-up: "(min-width: 768px)",
+  desktop-and-up: "(min-width: 992px)",
+  largedesktop-and-up: "(min-width: 1200px)",
+  extralarge-and-up: "(min-width: 1440px)",
+);
+
+@mixin respond-to($breakpoint) {
+  $raw-query: map-get($breakpoints, $breakpoint);
+
+  @if $raw-query {
+    $query: if(
+      type-of($raw-query) == "string",
+      unquote($raw-query),
+      inspect($raw-query)
+    );
+
+    @media #{$query} {
+      @content;
+    }
+  }
+}
+
+@mixin mg($x: 0, $y: 0) {
+  margin: $y $x;
+}
+
+@mixin pd($x: 0, $y: 0) {
+  padding: $y $x;
+}
