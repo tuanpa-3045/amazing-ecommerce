@@ -1,0 +1,56 @@
+@import "../../sass/style.scss";
+
+h3 {
+  @include font($fs: $fs-sizable, $color: $gray, $fw: $fw-bold);
+  @include pd($y: 1rem);
+  @include mg($y: 1rem);
+  border-top: 1px solid $gray;
+}
+
+h4 {
+  @include font($fs: $fs-sizable, $color: $black, $fw: $fw-bold);
+}
+
+.list-filter {
+  overflow-y: auto;
+}
+
+.btn-clear {
+  @include pd($x: 2rem, $y: 0.5rem);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.filters-search {
+  position: relative;
+
+  input {
+    padding-left: 2rem;
+  }
+
+  i {
+    position: absolute;
+    top: 1.5rem;
+    left: 5px;
+  }
+}
+
+input[type="number"] {
+  @include mg($x: 1rem);
+  width: 5rem;
+}
+
+.btn-go {
+  border: 1px solid $black;
+  border-radius: 50%;
+  line-height: 1.7;
+  width: 3rem;
+  height: 3rem;
+
+  &:hover {
+    cursor: pointer;
+    border: 1px solid $primary-color;
+    background-color: rgba($primary-color, 0.2);
+    color: $blue;
+  }
+}

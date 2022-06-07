@@ -1,0 +1,48 @@
+@import "../../sass/style.scss";
+.container-content {
+  @include pd($x: 1rem);
+  width: 100%;
+}
+
+.content-header {
+  @include flex($align: center, $justify: space-between, $wrap: nowrap);
+  width: 100%;
+}
+
+.product-item {
+  padding: 10px 20px 20px;
+  width: 100%;
+  // border-bottom: solid 1px #eee;
+  margin-bottom: 14px;
+  border: solid 1px $light-gray;
+
+  &__img {
+    height: 150px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  &__name {
+    min-width: 120px;
+    margin-bottom: 8px;
+    color: $black;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  &__type {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+  }
+
+  &__price {
+    float: right;
+    color: $black;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+
+  &__rating {
+    margin-bottom: 10px;
+  }
+}
