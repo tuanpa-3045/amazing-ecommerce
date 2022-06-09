@@ -11,8 +11,11 @@ h4 {
   @include font($fs: $fs-sizable, $color: $black, $fw: $fw-bold);
 }
 
-.list-filter {
-  overflow-y: auto;
+li {
+  cursor: pointer;
+  &:hover {
+    color: $red;
+  }
 }
 
 .btn-clear {
@@ -36,7 +39,7 @@ h4 {
 }
 
 input[type="number"] {
-  @include mg($x: 1rem);
+  margin-right: 1rem;
   width: 5rem;
 }
 

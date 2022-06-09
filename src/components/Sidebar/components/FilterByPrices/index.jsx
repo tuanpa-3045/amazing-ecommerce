@@ -1,42 +1,119 @@
-import React from "react";
-
-const PRICE_RANGE = [
-  { lte: 1 },
-  { gte: 1, lte: 80 },
-  { gte: 80, lte: 160 },
-  { gte: 160, lte: 240 },
-  { gte: 240, lte: 1820 },
-  { gte: 1820, lte: 3400 },
-  { gte: 3400, lte: 4980 },
-  { gte: 4980 },
-];
+import React, { useContext, useRef } from "react";
+import { PRICE_RANGE } from "../../../../constants";
+import { ProductsContext } from "../../../../context";
 
 function FilterByPrices() {
+  const { productsPage, setProductsPage } = useContext(ProductsContext);
+  const { price } = productsPage?.filters;
+
+  const priceInput_gte = useRef();
+  const priceInput_lte = useRef();
+
+  const handleFilterPrices = (e) => {
+    setProductsPage({
+      ...productsPage,
+
+      pagination: {
+        _page: 1,
+        _limit: 16,
+      },
+      isClearFilter: true,
+      filters: {
+        ...productsPage.filters,
+        price: {
+          price_gte: e.target.dataset.gte || 0,
+          price_lte: e.target.dataset.lte,
+        },
+      },
+    });
+  };
+
+  const handleFilterRangePrices = () => {
+    setProductsPage({
+      ...productsPage,
+      isClearFilter: true,
+      filters: {
+        ...productsPage.filters,
+        price: {
+          price_gte: priceInput_gte.current.value || 0,
+          price_lte: priceInput_lte.current.value,
+        },
+      },
+    });
+  };
+
   return (
     <>
       <h4>Prices</h4>
       <div className="prices">
-        {PRICE_RANGE.map((range, index) => {
-          return (
-            <li key={index}>
-              {range.gte && range.lte
-                ? `$${range.gte} - ${range.lte}`
-                : range.lte
-                ? `≤ $${range.lte}`
-                : `≥ $${range.gte}`}
+        <ul>
+          {price?.price_gte && price?.price_lte ? (
+            <li
+              data-gte={price.price_gte}
+              data-lte={price.price_lte}
+              onClick={handleFilterPrices}
+            >
+              ${price.price_gte} - ${price.price_lte}
             </li>
-          );
-        })}
+          ) : price?.price_gte ? (
+            <li
+              data-gte={price.price_gte}
+              data-lte={price.price_lte}
+              onClick={handleFilterPrices}
+            >
+              ≥ ${price.price_gte}
+            </li>
+          ) : price?.price_lte ? (
+            <li
+              data-gte={price.price_gte}
+              data-lte={price.price_lte}
+              onClick={handleFilterPrices}
+            >
+              ≤ ${price.price_lte}
+            </li>
+          ) : (
+            PRICE_RANGE.map((priceRange, index) => (
+              <li
+                key={index}
+                data-gte={priceRange.gte}
+                data-lte={priceRange.lte}
+                onClick={handleFilterPrices}
+              >
+                {priceRange.gte && priceRange.lte
+                  ? `$${priceRange.gte} - ${priceRange.lte}`
+                  : priceRange.gte
+                  ? `≥ ${priceRange.gte}`
+                  : `≤ ${priceRange.lte}`}
+              </li>
+            ))
+          )}
+        </ul>
       </div>
       <form>
         <label>
-          $<input type="number" min={0}></input>
+          $
+          <input
+            type="number"
+            min={0}
+            ref={priceInput_gte}
+            defaultValue={price?.price_gte}
+          ></input>
         </label>
-        <span>to</span>
+        <span className="mx-2">to</span>
         <label>
-          $<input type="number" min={0}></input>
+          $
+          <input
+            type="number"
+            min={0}
+            ref={priceInput_lte}
+            defaultValue={price?.price_lte}
+          ></input>
         </label>
-        <button type="submit" className="btn-go" onClick={() => null}>
+        <button
+          type="button"
+          className="btn-go"
+          onClick={handleFilterRangePrices}
+        >
           Go
         </button>
       </form>
