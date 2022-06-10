@@ -1,12 +1,45 @@
-import React from "react";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
+import { getProducts } from "../api/api";
 import Content from "../components/Content";
 import Sidebar from "../components/Sidebar";
+import { ProductsContext } from "../context";
 
 import Header from "../layout/Header";
 
 import "./styles.scss";
 
 function Home() {
+  const { productsPage, setProductsPage } = useContext(ProductsContext);
+
+  useEffect(() => {
+    const startAt = new Date().getTime();
+    getProducts({
+      ...productsPage?.pagination,
+      ...productsPage?.filters?.price,
+      ...productsPage?.filters?.order,
+      ...productsPage?.filters?.search,
+      ...productsPage?.filters?.rating,
+      ...productsPage?.filters?.category,
+      ...productsPage?.filters?.brand,
+    }).then((res) => {
+      setProductsPage({
+        ...productsPage,
+        products: res?.data?.products,
+        pagination: res?.data?.pagination,
+        timeLoading: new Date().getTime() - startAt,
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    productsPage?.pagination._page,
+    productsPage?.filters?.prices,
+    productsPage?.filters?.order,
+    productsPage?.filters?.search,
+    productsPage?.filters?.rating,
+    productsPage?.filters?.category,
+    // productsPage?.filters?.brand,
+  ]);
+
   return (
     <div className="container-fluid">
       <Header />

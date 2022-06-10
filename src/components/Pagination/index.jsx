@@ -2,17 +2,17 @@ import React from "react";
 import "./Pagination.scss";
 import ReactPaginate from "react-paginate";
 
-function Pagination(props) {
-  // const { pagination } = props;
-  const pagination = {
+function Pagination({
+  pagination = {
     _totalProducts: 100,
     _limit: 16,
-  };
-
+  },
+  handleChangePagination,
+}) {
   const totalPage = Math.ceil(pagination._totalProducts / pagination._limit);
 
-  const handlePaginaion = (e) => {
-    console.log(e);
+  const handlePagination = (e) => {
+    handleChangePagination(e.selected + 1);
   };
 
   return (
@@ -23,7 +23,7 @@ function Pagination(props) {
       pageCount={totalPage}
       marginPagesDisplayed={3}
       pageRangeDisplayed={4}
-      onPageChange={handlePaginaion}
+      onPageChange={handlePagination}
       containerClassName={"pagination justify-content-center"}
       pageClassName={"page-item"}
       pageLinkClassName={"page-link"}

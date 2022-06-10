@@ -4,4 +4,7 @@
     color: #9c0001;
     cursor: pointer;
   }
+  &:active {
+    font-weight: bold;
+  }
 }

@@ -1,33 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
+import { types } from "../../../../constants";
+import { ProductsContext } from "../../../../context";
 import CheckBoxList from "../CheckBoxList";
 
 function FilterByType() {
-  const type = [
-    {
-      title: "Trend cases",
-      amount: 432,
-    },
-    {
-      title: "Ult protection cases",
-      amount: 431,
-    },
-    {
-      title: "Ink cartridges",
-      amount: 433,
-    },
-    {
-      title: "Business cases",
-      amount: 217,
-    },
-    {
-      title: "Connectivity",
-      amount: 181,
-    },
-  ];
+  const { productsPage, setProductsPage } = useContext(ProductsContext);
+
   return (
     <>
       <h4>Type</h4>
-      <CheckBoxList optionList={type} />
+      <CheckBoxList
+        optionList={types}
+        productsPage={productsPage}
+        setProductsPage={setProductsPage}
+        name={"type"}
+      />
     </>
   );
 }
