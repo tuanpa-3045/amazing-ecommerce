@@ -1,62 +1,54 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSortPrice } from "../../redux/action";
+
 import CardItem from "./CardItem";
 import Pagination from "../Pagination";
 import "./styles.scss";
 
-const products = [
-  {
-    name: "3-Year Unlimited Cloud Storage Service Activation Card - Other",
-    description:
-      "Enjoy 3 years of unlimited Cloud storage service with this activation card, which allows you to remotely access your favorite music, movies and other media via a compatible device and enables private file sharing with loved ones.",
-    brand: "Pogoplug",
-    categories: ["Best Buy Gift Cards", "Entertainment Gift Cards"],
-    hierarchicalCategories: {
-      lvl0: "Best Buy Gift Cards",
-      lvl1: "Best Buy Gift Cards > Entertainment Gift Cards",
-    },
-    type: "Online data backup",
-    price: 69,
-    price_range: "50 - 100",
-    image: "https://cdn-demo.algolia.com/bestbuy/1696302_sc.jpg",
-    url: "http://www.bestbuy.com/site/3-year-unlimited-cloud-storage-service-activation-card-other/1696302.p?id=1219066776306&skuId=1696302&cmp=RMX&ky=1uWSHMdQqBeVJB9cXgEke60s5EjfS6M1W",
-    free_shipping: true,
-    popularity: 10000,
-    rating: 2,
-    objectID: "1696302",
-  },
-];
-
 function Content() {
-  const results = 123456;
-  const time = 3;
-  const renderProduct = (products) => {
-    const ArrayProduct = [];
-    for (let i = 0; i < 16; i++) {
-      ArrayProduct.push(<CardItem product={products[0]} key={i} />);
-    }
-    return ArrayProduct;
+  const dispatch = useDispatch();
+  const { products, timeLoading, pagination, isLoading, isClearFilter } =
+    useSelector((state) => state.productReducer);
+
+  const handleSortPrice = (e) => {
+    dispatch(setSortPrice({ params: e.target.value }));
   };
 
   return (
     <div className="container-content">
       <div className="content-header">
         <p>
-          {results.toLocaleString()} results found in {time} ms
+          {pagination?._totalProducts?.toLocaleString()} results found in:{" "}
+          {timeLoading} ms
         </p>
         <div>
           <label>
-            Sort by
-            <select>
-              <option value="0" defaultChecked>
+            Sort by:
+            <select style={{ marginLeft: "5px" }} onChange={handleSortPrice}>
+              <option value="default" selected={!isClearFilter && true}>
                 Featured
               </option>
-              <option value="1">Price asc.</option>
-              <option value="2">Price desc.</option>
+              <option value="asc">Price asc.</option>
+              <option value="desc">Price desc.</option>
             </select>
           </label>
         </div>
       </div>
-      <div className="row">{renderProduct(products)}</div>
+      <div className="row">
+        {isLoading ? (
+          <div className="d-flex justify-content-center align-items-center vh-100">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          products &&
+          products.map((product, index) => (
+            <CardItem product={product} key={index} />
+          ))
+        )}
+      </div>
       <Pagination />
     </div>
   );
