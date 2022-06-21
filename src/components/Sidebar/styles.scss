@@ -11,6 +11,14 @@ h4 {
   @include font($fs: $fs-sizable, $color: $black, $fw: $fw-bold);
 }
 
+li {
+  cursor: pointer;
+  &:hover {
+    color: $red;
+    font-weight: bold;
+  }
+}
+
 .list-filter {
   overflow-y: auto;
 }
@@ -36,7 +44,7 @@ h4 {
 }
 
 input[type="number"] {
-  @include mg($x: 1rem);
+  @include mg($x: 0.5rem);
   width: 5rem;
 }
 

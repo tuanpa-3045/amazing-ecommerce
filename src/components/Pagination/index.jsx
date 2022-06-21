@@ -2,17 +2,18 @@ import React from "react";
 import "./Pagination.scss";
 import ReactPaginate from "react-paginate";
 
-function Pagination(props) {
-  // const { pagination } = props;
-  const pagination = {
-    _totalProducts: 100,
-    _limit: 16,
-  };
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentPage } from "../../redux/action";
+
+function Pagination() {
+  const { pagination } = useSelector((state) => state.productReducer);
+
+  const dispatch = useDispatch();
 
   const totalPage = Math.ceil(pagination._totalProducts / pagination._limit);
 
-  const handlePaginaion = (e) => {
-    console.log(e);
+  const handlePagination = (e) => {
+    dispatch(setCurrentPage(e.selected + 1));
   };
 
   return (
@@ -23,7 +24,7 @@ function Pagination(props) {
       pageCount={totalPage}
       marginPagesDisplayed={3}
       pageRangeDisplayed={4}
-      onPageChange={handlePaginaion}
+      onPageChange={handlePagination}
       containerClassName={"pagination justify-content-center"}
       pageClassName={"page-item"}
       pageLinkClassName={"page-link"}
@@ -34,7 +35,6 @@ function Pagination(props) {
       breakClassName={"page-item"}
       breakLinkClassName={"page-link"}
       activeClassName={"active"}
-      forcePage={pagination._page && pagination._page - 1}
     />
   );
 }

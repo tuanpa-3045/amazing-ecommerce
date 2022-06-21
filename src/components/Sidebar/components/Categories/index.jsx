@@ -1,44 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchCategories } from "../../../../api/api";
+import { setCategory } from "../../../../redux/action";
+
 import "./styles.scss";
 
 function Categories() {
-  const categories = [
-    {
-      title: "Appliances",
-    },
-    {
-      title: "Audio",
-    },
-    {
-      title: "Cameras & Camcorders",
-    },
-    {
-      title: "Car Electronics & GPS",
-    },
-    {
-      title: "Cell Phones",
-    },
-    {
-      title: "Computers & Tablets",
-    },
-    {
-      title: " Health, Fitness & Beauty",
-    },
-    {
-      title: "Office & School Supplies",
-    },
-    {
-      title: "TV & Home Theater",
-    },
-    {
-      title: "Video Games",
-    },
-  ];
+  const dispatch = useDispatch();
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchCategories().then((res) => setCategories(res.data));
+  }, []);
+
+  const handleFindCategory = (e) => {
+    dispatch(setCategory(e.target.dataset.category));
+  };
+
   return (
     <div className="categories">
       <h3>Show results for</h3>
       {categories.map((item, index) => (
-        <li key={index}>{item.title}</li>
+        <li key={index} onClick={handleFindCategory} data-category={item.name}>
+          {item.name}
+        </li>
       ))}
     </div>
   );
